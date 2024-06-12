@@ -1,23 +1,23 @@
-import { useState } from 'react'
-import './App.css'
+import { useState } from "react"
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent 
+} from "@/components/ui/card"
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [totalSpent, setTotalSpent] = useState(0)
 
   return (
-    <>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          up
-        </button>
-        <button onClick={() => setCount((count) => count - 1)}>
-          down
-        </button>
-        <p>
-          {count}
-        </p>
-      </div>
-    </>
+    <Card className='w-[350px] m-auto'>
+      <CardHeader>
+        <CardTitle>Total Spent</CardTitle>
+        <CardDescription>The total amount spent</CardDescription>
+      </CardHeader>
+      <CardContent>{totalSpent}</CardContent>
+    </Card>
   )
 }
 
