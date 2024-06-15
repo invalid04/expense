@@ -25,6 +25,9 @@ function Navbar() {
       <Link to="/create-expense" className="[&.active]:font-bold">
         Add Expenses
       </Link>
+      <Link to="/profile" className="[&.active]:font-bold">
+        Profile
+      </Link>
     </div>
   )
 }
