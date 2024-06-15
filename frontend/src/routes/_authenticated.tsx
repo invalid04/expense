@@ -3,7 +3,12 @@ import { createFileRoute, Outlet } from '@tanstack/react-router'
 import { userQueryOptions } from '@/lib/api'
 
 const Login = () => {
-  return <div>Login</div>
+  return (
+    <div>
+      login 
+      <a href="/api/login">Login</a>
+    </div>
+  )
 }
 
 const Component = () => {

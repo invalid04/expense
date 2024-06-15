@@ -18,6 +18,7 @@ function Profile() {
     <div className='p-2'>
       <p>
         {data.user.family_name}
+        <a href='/api/logout'>logout</a>
       </p>
     </div>
   )

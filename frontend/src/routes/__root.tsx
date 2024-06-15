@@ -36,6 +36,7 @@ function Root() {
   return (
     <>
       <hr />
+      <Navbar />
       <Outlet />
       <TanStackRouterDevtools />
     </>
