@@ -24,9 +24,11 @@ export const authRoute = new Hono()
     const isAuthenticated = await kindeClient.isAuthenticated(
         manager
     ); 
+    
     if (!isAuthenticated) {
         return c.json({ error: "unauthorized" }, 401);
     } 
+
     const user = await kindeClient.getUserProfile(manager);
     return c.json({ user })
 })
