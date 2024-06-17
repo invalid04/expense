@@ -18,7 +18,7 @@ export const insertExpenseSchema = createInsertSchema(expenses, {
     title: z 
         .string()
         .min(3, { message: 'Title must be at least 3 characters long' }),
-    amount: z.string().regex(/^\d+(\.\d{1,2})?$/, { message: 'amount must be positive' })
+    amount: z.number().min(0, { message: 'Must enter a positive amount'})
 })
 
 export const selectExpenseSchema = createSelectSchema(expenses)

@@ -38,7 +38,7 @@ function CreateExpense() {
     <div className='p-2'>
       <h2>Create Expense</h2>
         <form 
-          className='max-w-xl m-auto'
+          className='flex flex-col gap-y-4 max-w-xl m-auto'
           onSubmit={(e) => {
             e.preventDefault()
             e.stopPropagation()
@@ -52,7 +52,7 @@ function CreateExpense() {
               onChange: createExpenseSchema.shape.title
             }}
             children={(field) => (
-              <>
+              <div>
                 <Label htmlFor={field.name}>Title</Label>
                 <Input 
                   id={field.name}
@@ -64,7 +64,7 @@ function CreateExpense() {
                 {field.state.meta.touchedErrors ? (
                   <em>{field.state.meta.touchedErrors}</em>
                 ) : null}
-              </>
+              </div>
             )}
           />
 
@@ -74,7 +74,7 @@ function CreateExpense() {
               onChange: createExpenseSchema.shape.amount
             }}
             children={(field) => (
-              <>
+              <div>
                 <Label htmlFor={field.name}>Amount</Label>
                 <Input 
                   id={field.name}
@@ -87,7 +87,7 @@ function CreateExpense() {
                 {field.state.meta.touchedErrors ? (
                   <em>{field.state.meta.touchedErrors}</em>
                 ) : null}
-              </>
+              </div>
             )}
           />
 
