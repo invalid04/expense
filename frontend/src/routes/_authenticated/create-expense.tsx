@@ -23,7 +23,8 @@ function CreateExpense() {
     validatorAdapter: zodValidator,
     defaultValues: {
       title: '',
-      amount: 0,
+      amount: '0',
+      date: new Date().toISOString(),
     },
     onSubmit: async ({ value }) => {
       const res = await api.expenses.$post({ json: value })
@@ -83,7 +84,7 @@ function CreateExpense() {
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   type='number'
-                  onChange={(e) => field.handleChange(Number(e.target.value))}
+                  onChange={(e) => field.handleChange(e.target.value)}
                 />
                 {field.state.meta.touchedErrors ? (
                   <em>{field.state.meta.touchedErrors}</em>
@@ -101,8 +102,9 @@ function CreateExpense() {
               <div className='self-center'>
                 <Calendar
                   mode="single"
-                  selected={field.state.value}
-                  onSelect={(e) => field.handleChange(e.target.value)}
+                  selected={new Date(field.state.value)}
+                  onSelect={(date) => 
+                    field.handleChange((date ?? new Date()).toISOString())}
                   className="rounded-md border"
                 />
                 {field.state.meta.touchedErrors ? (
