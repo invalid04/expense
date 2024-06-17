@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button'
 import { api } from '@/lib/api'
 
 import { zodValidator } from '@tanstack/zod-form-adapter'
-import { z } from 'zod'
 
 import { createExpenseSchema } from '@server/sharedTypes'
 
@@ -71,6 +70,9 @@ function CreateExpense() {
 
           <form.Field 
             name='amount'
+            validators={{
+              onChange: createExpenseSchema.shape.amount
+            }}
             children={(field) => (
               <>
                 <Label htmlFor={field.name}>Amount</Label>
