@@ -6,6 +6,9 @@ import { Button } from '@/components/ui/button'
 
 import { api } from '@/lib/api'
 
+import { zodValidator } from '@tanstack/zod-form-adapter'
+import { z } from 'zod'
+
 export const Route = createFileRoute('/_authenticated/create-expense')({
   component: CreateExpense,
 })
@@ -15,6 +18,7 @@ function CreateExpense() {
   const navigate = useNavigate()
 
   const form = useForm({
+    validatorAdapter: zodValidator,
     defaultValues: {
       title: '',
       amount: 0,
@@ -43,6 +47,9 @@ function CreateExpense() {
 
           <form.Field 
             name='title'
+            validators={{
+              onChange: z.string().min(3, {message: 'Title must be at least 3 characters'})
+            }}
             children={(field) => (
               <>
                 <Label htmlFor={field.name}>Title</Label>
