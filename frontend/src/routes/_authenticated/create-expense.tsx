@@ -98,7 +98,7 @@ function CreateExpense() {
               onChange: createExpenseSchema.shape.date
             }}
             children={(field) => (
-              <div>
+              <div className='self-center'>
                 <Calendar
                   mode="single"
                   selected={field.state.value}
