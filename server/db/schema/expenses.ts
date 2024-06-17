@@ -1,4 +1,5 @@
 import { text, numeric, pgTable, serial, index, timestamp } from 'drizzle-orm/pg-core';
+import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
 
 export const expenses = pgTable('expenses', {
     id: serial('id').primaryKey(),
@@ -11,3 +12,7 @@ export const expenses = pgTable('expenses', {
         userIdIndex: index('name_idx').on(expenses.userId),
     }
 });
+
+export const insertExpenseSchema = createInsertSchema(expenses)
+
+export const selectExpenseSchema = createSelectSchema(expenses)
