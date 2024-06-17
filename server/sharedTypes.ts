@@ -6,4 +6,4 @@ export const expenseSchema = z.object({
     amount: z.number().int().positive()
 })
 
-export const createPostSchema = expenseSchema.omit({ id: true })
+export const createExpenseSchema = expenseSchema.omit({ id: true })

@@ -9,6 +9,8 @@ import { api } from '@/lib/api'
 import { zodValidator } from '@tanstack/zod-form-adapter'
 import { z } from 'zod'
 
+import { createExpenseSchema } from '@server/sharedTypes'
+
 export const Route = createFileRoute('/_authenticated/create-expense')({
   component: CreateExpense,
 })
@@ -48,7 +50,7 @@ function CreateExpense() {
           <form.Field 
             name='title'
             validators={{
-              onChange: z.string().min(3, {message: 'Title must be at least 3 characters'})
+              onChange: createExpenseSchema.shape.title
             }}
             children={(field) => (
               <>

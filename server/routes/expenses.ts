@@ -7,7 +7,7 @@ import { db } from "../db";
 import {expenses as expenseTable } from "../db/schema/expenses"
 import { eq, desc, sum, and } from "drizzle-orm";
 
-import { createPostSchema } from "../sharedTypes";
+import { createExpenseSchema } from "../sharedTypes";
 
 export const expensesRoute = new Hono()
 .get("/", getUser, async (c) => {
@@ -21,7 +21,7 @@ export const expensesRoute = new Hono()
     
     return c.json({ expenses: expenses})
 })
-.post("/", getUser, zValidator("json", createPostSchema), async (c) => {
+.post("/", getUser, zValidator("json", createExpenseSchema), async (c) => {
     const expense = await c.req.valid("json")
     const user = c.var.user 
 
