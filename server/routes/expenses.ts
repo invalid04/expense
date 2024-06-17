@@ -45,9 +45,15 @@ export const expensesRoute = new Hono()
     c.status(201)
     return c.json(result)
 })
-.get("/total-spent", getUser, (c) => {
-    const total = fakeExpenses.reduce((acc, expense) => acc + expense.amount, 0);
-    return c.json({ total });
+.get("/total-spent", getUser, async (c) => {
+    const user = c.var.user 
+    const result = await db 
+        .select({ total: sum(expenseTable.amount) })
+        .from(expenseTable)
+        .where(eq(expenseTable.userId, user.id))
+        .limit(1)
+        .then((res) => res[0])
+    return c.json(result)
 })
 .get("/:id{[0-9]+}", getUser, (c) => {
     const id = Number.parseInt(c.req.param('id'))
