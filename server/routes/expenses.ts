@@ -55,20 +55,33 @@ export const expensesRoute = new Hono()
         .then((res) => res[0])
     return c.json(result)
 })
-.get("/:id{[0-9]+}", getUser, (c) => {
+.get("/:id{[0-9]+}", getUser, async (c) => {
     const id = Number.parseInt(c.req.param('id'))
-    const expense = fakeExpenses.find(expense => expense.id === id)
+    const user = c.var.user 
+
+    const expense = await db 
+        .select()
+        .from(expenseTable)
+        .where(and(eq(expenseTable.userId, user.id), eq(expenseTable.id, id)))
+        .then((res) => res[0])
+
     if (!expense) {
         return c.notFound()
     }
-    return c.json({expense})
+    return c.json({ expense })
 })
-.delete("/:id{[0-9]+}", getUser, (c) => {
+.delete("/:id{[0-9]+}", getUser, async (c) => {
     const id = Number.parseInt(c.req.param('id'))
-    const index = fakeExpenses.findIndex((expense => expense.id === id))
-    if (index === -1) {
+    const user = c.var.user
+
+    const expense = await db 
+        .delete(expenseTable)
+        .where(and(eq(expenseTable.userId, user.id), eq(expenseTable.id, id)))
+        .returning()
+        .then((res) => res[0])
+
+    if (!expense) {
         return c.notFound()
     }
-    const deletedExpense = fakeExpenses.splice(index, 1)[0]
-    return c.json({ expense: deletedExpense })
+    return c.json({ expense: expense })
 })
