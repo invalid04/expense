@@ -3,6 +3,7 @@ import { useForm } from '@tanstack/react-form'
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from '@/components/ui/button'
+import { Calendar } from '@/components/ui/calendar'
 
 import { api } from '@/lib/api'
 
@@ -83,6 +84,26 @@ function CreateExpense() {
                   onBlur={field.handleBlur}
                   type='number'
                   onChange={(e) => field.handleChange(Number(e.target.value))}
+                />
+                {field.state.meta.touchedErrors ? (
+                  <em>{field.state.meta.touchedErrors}</em>
+                ) : null}
+              </div>
+            )}
+          />
+
+          <form.Field 
+            name='date'
+            validators={{
+              onChange: createExpenseSchema.shape.date
+            }}
+            children={(field) => (
+              <div>
+                <Calendar
+                  mode="single"
+                  selected={field.state.value}
+                  onSelect={(e) => field.handleChange(e.target.value)}
+                  className="rounded-md border"
                 />
                 {field.state.meta.touchedErrors ? (
                   <em>{field.state.meta.touchedErrors}</em>
