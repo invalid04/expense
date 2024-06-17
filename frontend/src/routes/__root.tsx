@@ -16,7 +16,7 @@ function Navbar() {
         <Link to="/" className="[&.active]:font-bold">
           <h1>Expense Tracker</h1>
         </Link>
-      <div className="flex gap-2">
+      <div className="flex gap-4">
         <Link to="/about" className="[&.active]:font-bold">
           About
         </Link>
@@ -39,7 +39,9 @@ function Root() {
     <>
       <hr />
       <Navbar />
-      <Outlet />
+      <div className='p-2 max-w-2xl m-auto'>
+        <Outlet />
+      </div>
       <TanStackRouterDevtools />
     </>
   )
