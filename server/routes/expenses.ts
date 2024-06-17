@@ -26,6 +26,7 @@ export const expensesRoute = new Hono()
         .select()
         .from(expenseTable)
         .where(eq(expenseTable.userId, user.id))
+        .orderBy(desc(expenseTable.createdAt))
     
     return c.json({ expenses: expenses})
 })
