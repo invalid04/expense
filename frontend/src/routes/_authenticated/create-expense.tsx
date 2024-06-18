@@ -29,21 +29,17 @@ function CreateExpense() {
       date: new Date().toISOString(),
     },
     onSubmit: async ({ value }) => {
-      const res = await api.expenses.$post({ json: value })
-
-      if(!res.ok) {
-        throw new Error('server error')
-      }
-
-      const newExpense = await res.json()
-      const existingExpenses = await queryClient.ensureQueryData(getAllExpensesQueryOptions)
+      const existingExpenses = await queryClient.ensureQueryData(
+        getAllExpensesQueryOptions
+      )
+      
+      navigate({to: '/expenses'})
 
       queryClient.setQueryData(getAllExpensesQueryOptions.queryKey, {
         ...existingExpenses,
         expenses: [newExpense, ...existingExpenses.expenses],
       })
 
-      navigate({to: '/expenses'})
     }
   })
 

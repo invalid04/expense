@@ -7,3 +7,4 @@ export const createExpenseSchema = insertExpenseSchema.omit({
     createdAt: true,
 })
 
+export type CreateExpense = z.infer<typeof createExpenseSchema>

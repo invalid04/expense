@@ -37,3 +37,13 @@ export const getAllExpensesQueryOptions = queryOptions({
   queryFn: getAllExpenses,
   staleTime: 1000 * 60 * 5
 })
+
+export async function createExpense({value}) {
+  const res = await api.expenses.$post({ json: value })
+  if(!res.ok) {
+    throw new Error('server error')
+  }
+
+  const newExpense = await res.json()
+  return newExpense
+}
