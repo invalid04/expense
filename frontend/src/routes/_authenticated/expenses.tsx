@@ -73,14 +73,20 @@ function Expenses() {
                 <TableCell>{expense.amount}</TableCell>
                 <TableCell>{expense.date}</TableCell>
                 <TableCell>
-                  <Button variant='outline' size='icon'>
-                    <Trash className='h-4 w-4' />
-                  </Button>
+                  <ExpenseDeleteButton />
                 </TableCell>
               </TableRow>
             ))} 
         </TableBody>
       </Table>
     </div>
+  )
+}
+
+function ExpenseDeleteButton() {
+  return (
+    <Button variant='outline' size='icon'>
+      <Trash className='h-4 w-4' />
+    </Button>
   )
 }
