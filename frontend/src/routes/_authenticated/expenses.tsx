@@ -1,5 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { getAllExpensesQueryOptions, loadingCreateExpenseQueryOptions } from '@/lib/api'
+import { 
+  getAllExpensesQueryOptions, 
+  loadingCreateExpenseQueryOptions,
+  deleteExpense
+} from '@/lib/api'
 import { useQuery, useMutation } from '@tanstack/react-query'
 
 import {
@@ -14,6 +18,7 @@ import {
 import { Skeleton } from '@/components/ui/skeleton'
 import { Button } from '@/components/ui/button'
 import { Trash } from 'lucide-react'
+import { toast } from 'sonner'
 
 export const Route = createFileRoute('/_authenticated/expenses')({
   component: Expenses,
@@ -85,13 +90,30 @@ function Expenses() {
 
 function ExpenseDeleteButton({ id }: { id: number }) {
 
-  useMutation({
+  const mutation = useMutation({
     mutationFn: deleteExpense,
+
+    onError: () => {
+      toast('Error', {
+        description: `Failed to delete expense: ${id}`
+      })
+    },
+
+    onSuccess: () => {
+      toast('Expense Deleted', {
+        description: `Successfully deleted expense: ${id}`
+      })
+    }
   })
 
   return (
-    <Button variant='outline' size='icon'>
-      <Trash className='h-4 w-4' />
+    <Button 
+      disabled={mutation.isPending}
+      variant='outline' 
+      size='icon'
+      onClick={() => mutation.mutate({ id })}
+    >
+      {mutation.isPending ? '...' : <Trash className='h-4 w-4' />}
     </Button>
   )
 }
