@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label"
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 
-import { createExpense, getAllExpensesQueryOptions } from '@/lib/api'
+import { createExpense, getAllExpensesQueryOptions, loadingCreateExpenseQueryOptions } from '@/lib/api'
 import { useQueryClient } from '@tanstack/react-query'
 
 import { zodValidator } from '@tanstack/zod-form-adapter'
@@ -35,12 +35,22 @@ function CreateExpense() {
       
       navigate({to: '/expenses'})
 
-      const newExpense = await createExpense({ value })
-
-      queryClient.setQueryData(getAllExpensesQueryOptions.queryKey, {
-        ...existingExpenses,
-        expenses: [newExpense, ...existingExpenses.expenses],
+      queryClient.setQueryData(loadingCreateExpenseQueryOptions.queryKey, {
+        expense: value
       })
+
+      try {
+        const newExpense = await createExpense({ value })
+
+        queryClient.setQueryData(getAllExpensesQueryOptions.queryKey, {
+          ...existingExpenses,
+          expenses: [newExpense, ...existingExpenses.expenses],
+        })
+      } catch(error) {
+
+      } finally {
+        queryClient.setQueryData(loadingCreateExpenseQueryOptions.queryKey, {})
+      }
 
     }
   })

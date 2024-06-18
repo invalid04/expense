@@ -20,6 +20,9 @@ export const Route = createFileRoute('/_authenticated/expenses')({
 function Expenses() {
 
   const { isPending, error, data } = useQuery(getAllExpensesQueryOptions)
+  const { data: loadingCreateExpense } = useQuery({
+    queryKey: ['loading-create-expense'],
+  })
 
   if (error) return 'Error occurred: ' + error.message 
 
