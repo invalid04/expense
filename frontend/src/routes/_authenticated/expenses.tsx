@@ -4,7 +4,7 @@ import {
   loadingCreateExpenseQueryOptions,
   deleteExpense
 } from '@/lib/api'
-import { useQuery, useMutation } from '@tanstack/react-query'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 
 import {
   Table,
@@ -90,6 +90,7 @@ function Expenses() {
 
 function ExpenseDeleteButton({ id }: { id: number }) {
 
+  const queryClient = useQueryClient()
   const mutation = useMutation({
     mutationFn: deleteExpense,
 
@@ -103,6 +104,15 @@ function ExpenseDeleteButton({ id }: { id: number }) {
       toast('Expense Deleted', {
         description: `Successfully deleted expense: ${id}`
       })
+
+      queryClient.setQueryData(
+        getAllExpensesQueryOptions.queryKey, 
+        (existingExpenses) => ({
+          ...existingExpenses,
+          expenses: existingExpenses!.expenses.filter((e) => e.id !== id)
+        })
+      )
+
     }
   })
 
