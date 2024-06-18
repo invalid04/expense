@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
+import { toast } from 'sonner'
 
 import { createExpense, getAllExpensesQueryOptions, loadingCreateExpenseQueryOptions } from '@/lib/api'
 import { useQueryClient } from '@tanstack/react-query'
@@ -46,8 +47,14 @@ function CreateExpense() {
           ...existingExpenses,
           expenses: [newExpense, ...existingExpenses.expenses],
         })
-      } catch(error) {
 
+        toast('Expense Created', {
+          description: 'Created new expense'
+        })
+      } catch(error) {
+        toast('Error', {
+          description: 'Failed to create new expense'
+        })
       } finally {
         queryClient.setQueryData(loadingCreateExpenseQueryOptions.queryKey, {})
       }
