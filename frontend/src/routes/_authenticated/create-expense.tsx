@@ -5,7 +5,8 @@ import { Label } from "@/components/ui/label"
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 
-import { api } from '@/lib/api'
+import { api, getAllExpensesQueryOptions } from '@/lib/api'
+import { useQueryClient } from '@tanstack/react-query'
 
 import { zodValidator } from '@tanstack/zod-form-adapter'
 
@@ -17,6 +18,7 @@ export const Route = createFileRoute('/_authenticated/create-expense')({
 
 function CreateExpense() {
 
+  const queryClient = useQueryClient()
   const navigate = useNavigate()
 
   const form = useForm({
@@ -32,6 +34,15 @@ function CreateExpense() {
       if(!res.ok) {
         throw new Error('server error')
       }
+
+      const newExpense = await res.json()
+      const existingExpenses = await queryClient.ensureQueryData(getAllExpensesQueryOptions)
+
+      queryClient.setQueryData(getAllExpensesQueryOptions.queryKey, {
+        ...existingExpenses,
+        expenses: [newExpense, ...existingExpenses.expenses],
+      })
+
       navigate({to: '/expenses'})
     }
   })
