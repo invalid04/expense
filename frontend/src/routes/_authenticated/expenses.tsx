@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { getAllExpensesQueryOptions, loadingCreateExpenseQueryOptions } from '@/lib/api'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useMutation } from '@tanstack/react-query'
 
 import {
   Table,
@@ -73,7 +73,7 @@ function Expenses() {
                 <TableCell>{expense.amount}</TableCell>
                 <TableCell>{expense.date}</TableCell>
                 <TableCell>
-                  <ExpenseDeleteButton />
+                  <ExpenseDeleteButton id={expense.id} />
                 </TableCell>
               </TableRow>
             ))} 
@@ -83,7 +83,12 @@ function Expenses() {
   )
 }
 
-function ExpenseDeleteButton() {
+function ExpenseDeleteButton({ id }: { id: number }) {
+
+  useMutation({
+    mutationFn: deleteExpense,
+  })
+
   return (
     <Button variant='outline' size='icon'>
       <Trash className='h-4 w-4' />
