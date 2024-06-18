@@ -12,6 +12,8 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Skeleton } from '@/components/ui/skeleton'
+import { Button } from '@/components/ui/button'
+import { Trash } from 'lucide-react'
 
 export const Route = createFileRoute('/_authenticated/expenses')({
   component: Expenses,
@@ -34,6 +36,7 @@ function Expenses() {
             <TableHead>Title</TableHead>
             <TableHead>Amount</TableHead>
             <TableHead>Date</TableHead>
+            <TableHead>Delete</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -47,6 +50,7 @@ function Expenses() {
                 <TableCell>
                   {loadingCreateExpense?.expense.date.split("T")[0]}
                 </TableCell>
+                <TableCell><Skeleton className='h-4' /></TableCell>
             </TableRow>
           )}
 
@@ -59,6 +63,7 @@ function Expenses() {
                 <TableCell><Skeleton className='h-4' /></TableCell>
                 <TableCell><Skeleton className='h-4' /></TableCell>
                 <TableCell><Skeleton className='h-4' /></TableCell>
+                <TableCell><Skeleton className='h-4' /></TableCell>
               </TableRow>
             ))
           : data?.expenses.map((expense) => (
@@ -67,6 +72,11 @@ function Expenses() {
                 <TableCell>{expense.title}</TableCell>
                 <TableCell>{expense.amount}</TableCell>
                 <TableCell>{expense.date}</TableCell>
+                <TableCell>
+                  <Button variant='outline' size='icon'>
+                    <Trash className='h-4 w-4' />
+                  </Button>
+                </TableCell>
               </TableRow>
             ))} 
         </TableBody>
